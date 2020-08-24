@@ -24,6 +24,9 @@ public class LoginHelper {
         HttpContext responseHttpContext = OkHttpHelper.post(httpContext);
 
         if (!responseHttpContext.getBodyMediaType().equals(OkHttpHelper.HttpMediaType.JSON)) {
+            ResultMobileMessageCode resultMobileMessageCode = new ResultMobileMessageCode();
+            resultMobileMessageCode.setErrCode(-1);
+            resultMobileMessageCode.setErrMsg("获取验证码失败，该错误为系统错误（无法正常使用签到API），请务必联系本站管理员！");
             return null;
         }
 
@@ -44,6 +47,9 @@ public class LoginHelper {
         HttpContext responseHttpContext = OkHttpHelper.post(httpContext);
 
         if (!responseHttpContext.getBodyMediaType().equals(OkHttpHelper.HttpMediaType.JSON)) {
+            ResultLoginInfo resultLoginInfo = new ResultLoginInfo();
+            resultLoginInfo.setErrCode(-1);
+            resultLoginInfo.setErrMsg("获取验证码失败，该错误为系统错误（无法正常使用签到API），请务必联系本站管理员！");
             return null;
         }
 

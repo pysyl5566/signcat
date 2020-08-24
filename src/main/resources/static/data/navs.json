@@ -27,6 +27,13 @@
                 "spread": false
             },
             {
+                "title": "任务列表",
+                "href": "pages/member/task-list.html",
+                "fontFamily": "layui-icon",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
                 "title": "角色列表",
                 "href": "pages/member/role-list.html",
                 "icon": "&#xe62e;",

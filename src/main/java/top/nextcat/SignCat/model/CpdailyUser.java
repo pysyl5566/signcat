@@ -1,25 +1,49 @@
 package top.nextcat.SignCat.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@TableName("cpdaily_user")
 public class CpdailyUser {
+    @TableId(value = "id",type = IdType.AUTO)
+    private Integer id;
+    @TableField("mobile")
     private String mobile;
+    @TableField("name")
     private String name;
+    @TableField("school_code")
     private String schoolCode;
+    @TableField("student_id")
     private String studentId;
+    @JsonIgnore
+    @TableField("tgc")
     private String tgc;
+    @JsonIgnore
+    @TableField("session_token")
     private String sessionToken;
-    private String modAuthCas;
 
     public CpdailyUser() {
     }
 
-    public CpdailyUser(String mobile, String name, String schoolCode, String studentId, String tgc, String sessionToken, String modAuthCas) {
+    public CpdailyUser(Integer id, String mobile, String name, String schoolCode, String studentId, String tgc, String sessionToken) {
+        this.id = id;
         this.mobile = mobile;
         this.name = name;
         this.schoolCode = schoolCode;
         this.studentId = studentId;
         this.tgc = tgc;
         this.sessionToken = sessionToken;
-        this.modAuthCas = modAuthCas;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getMobile() {
@@ -68,13 +92,5 @@ public class CpdailyUser {
 
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
-    }
-
-    public String getModAuthCas() {
-        return modAuthCas;
-    }
-
-    public void setModAuthCas(String modAuthCas) {
-        this.modAuthCas = modAuthCas;
     }
 }

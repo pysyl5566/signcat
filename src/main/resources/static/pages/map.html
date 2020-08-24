@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>高德地图选点</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=4fce29a1db8f4bf146a649c687e9fe89"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="myPageTop">
+        <table>
+            <tr>
+                <td>
+                    <label>请输入关键字：</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="tipinput"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        //地图加载
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            zoom: 15
+        });
+        //输入提示
+        var autoOptions = {
+            input: "tipinput"
+        };
+
+        AMap.plugin(['AMap.PlaceSearch','AMap.AutoComplete'], function(){
+            var auto = new AMap.AutoComplete(autoOptions);
+            var placeSearch = new AMap.PlaceSearch({
+                map: map
+            });  //构造地点查询类
+            auto.on("select", select);//注册监听，当选中某条记录时会触发
+            function select(e) {
+                placeSearch.setCity(e.poi.adcode);
+                placeSearch.search(e.poi.name);  //关键字查询查询
+            }
+        });
+    </script>
+</body>
+</html>

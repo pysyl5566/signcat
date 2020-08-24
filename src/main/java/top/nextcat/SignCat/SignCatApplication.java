@@ -1,8 +1,12 @@
 package top.nextcat.SignCat;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan(basePackages = {"top.nextcat.SignCat.controller","top.nextcat.SignCat.serviceImpl"})
+@MapperScan("top.nextcat.SignCat.mapper")
 @SpringBootApplication
 public class SignCatApplication {
 

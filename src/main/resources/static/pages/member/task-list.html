@@ -37,7 +37,7 @@
 
 		let userTable = table.render({
 			elem: '#tableId',
-			url: '/v1/cpdaily/user/list',
+			url: '/v1/cpdaily/task/list',
 			limit: 20,
 			page: true,
 			toolbar: true,
@@ -46,10 +46,22 @@
 			cols: [[
 				{type: "checkbox", fixed: "left"},
 				{field: "id", title: "ID", width: 60, sort: true},
-				{field: "mobile", title: "手机号", width: 100},
-				{field: "name", title: "姓名", width: 100},
-				{field: "schoolCode", title: "学校名称", width: 100},
-				{field: "studentId", title: "学号", width: 100},
+				{field: "mobile", title: "手机号",templet: "<div>{{d.signUser.mobile}}</div>", width: 100},
+				{field: "name", title: "姓名",templet: "<div>{{d.signUser.name}}</div>", width: 100},
+				{field: "schoolCode", title: "学校名称",templet: "<div>{{d.signUser.schoolCode}}</div>", width: 100},
+				{field: "studentId", title: "学号",templet: "<div>{{d.signUser.studentId}}</div>", width: 100},
+				{field: "longitude", title: "经度",templet: "<div>{{d.signInfo.longitude}}</div>", width: 100},
+				{field: "latitude", title: "纬度",templet: "<div>{{d.signInfo.latitude}}</div>", width: 100},
+				{field: "isMalposition", title: "范围外签到",templet: function (d) {
+					if (d.signInfo.isMalposition == 1) {
+						return "是";
+					} else if (d.signInfo.isMalposition == 0) {
+						return "否";
+					}
+					return "未知";
+					}, width: 100},
+				{field: "abnormalReason", title: "填报信息",templet: "<div>{{d.signInfo.abnormalReason}}</div>", width: 100},
+				{field: "position", title: "填报地点",templet: "<div>{{d.signInfo.position}}</div>", width: 100},
 				{title: "操作", width: 100, align: "center", fixed: "right", templet: "#operationTpl"}
 			]],
 			done: function (res, curr, count) {
@@ -140,7 +152,10 @@
 		}
 
 		function add() {
-			okLayer.open("添加用户", "user-insert.html", "90%", "90%", null, function () {
+			okLayer.open("添加用户", "task-insert.html", "90%", "90%", function (layero) {
+				let iframeWin = window[layero.find("iframe")[0]["name"]];
+				iframeWin.initList();
+			}, function () {
 				userTable.reload();
 			})
 		}
@@ -172,7 +187,7 @@
 		<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="batchEnabled">批量启用</button>
 		<button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="batchDisabled">批量停用</button>
 		<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDel">批量删除</button>
-		<button class="layui-btn layui-btn-sm" lay-event="add">添加用户</button>
+		<button class="layui-btn layui-btn-sm" lay-event="add">添加任务</button>
 	</div>
 </script>
 <!-- 行工具栏模板 -->

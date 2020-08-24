@@ -15,7 +15,7 @@ import top.nextcat.SignCat.utils.EncryptHelper;
 import java.util.Map;
 
 public class AuthHelper {
-    public static CpdailyUser getModeAuthCas (CpdailyUser cpdailyUser) {
+    public static String getModeAuthCas (CpdailyUser cpdailyUser) {
         String apiUrl = BaseURL.BASE_URL_SCHOOL_CAMPUSHOY.replaceFirst("\\{schoolCode\\}",cpdailyUser.getSchoolCode()) + AuthApi.API_GET_MOD_AUTH_CAS;
         HttpContext httpContext = new HttpContext();
         httpContext.setUrl(apiUrl);
@@ -25,11 +25,12 @@ public class AuthHelper {
         if (responseHttpContext.getCookieMap().get(HttpUrl.parse(apiUrl).host()) != null) {
             for (Map.Entry<String, Cookie> cookie: responseHttpContext.getCookieMap().get(HttpUrl.parse(apiUrl).host()).entrySet()) {
                 if ("MOD_AUTH_CAS".equals(cookie.getKey())) {
-                    cpdailyUser.setModAuthCas(cookie.getValue().value());
+                    return cookie.getValue().value();
+//                    cpdailyUser.setModAuthCas(cookie.getValue().value());
                 }
             }
         }
-        return cpdailyUser;
+        return "";
     }
 
     public static ResultLoginInfo newValidation (CpdailyUser cpdailyUser) {
