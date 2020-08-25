@@ -11,7 +11,7 @@
 	<groupId>top.nextcat</groupId>
 	<artifactId>SignCat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>SignCat</name>
 	<description>I'm a kitten!</description>
 
