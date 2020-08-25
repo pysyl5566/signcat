@@ -7,5 +7,6 @@ import top.nextcat.SignCat.model.SignTask;
 import java.util.List;
 
 public interface CpdailyTaskService extends IService<SignTask> {
-    public List<SignTask> all ();
+    List<SignTask> all();
+    boolean insertSignTask(SignTask signTask);
 }

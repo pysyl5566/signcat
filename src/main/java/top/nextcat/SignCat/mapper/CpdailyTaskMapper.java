@@ -24,4 +24,7 @@ public interface CpdailyTaskMapper extends BaseMapper<SignTask> {
     @Select("SELECT * FROM SIGN_TASK")
     List<SignTask> all();
 
+    @Insert("INSERT INTO SIGN_TASK(CPDAILY_USER_ID,SIGN_INFO_ID) VALUES(#{signUser.id},#{signInfo.id})")
+    @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
+    boolean insertSignInfo (SignTask signTask);
 }

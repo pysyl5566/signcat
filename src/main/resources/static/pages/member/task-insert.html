@@ -40,7 +40,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">外围签到</label>
 			<div class="layui-input-block">
-				<input type="checkbox" name="isMalposition" lay-skin="switch" lay-text="是|否" checked value="0">
+				<input type="checkbox" name="isMalposition" lay-skin="switch" lay-text="是|否" checked value="1">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -66,7 +66,7 @@
 		<div class="layui-form-item layui-form-text">
 			<label class="layui-form-label">填报信息</label>
 			<div class="layui-input-block">
-				<textarea name="abnormalReason" placeholder="请输入填报信息" class="layui-textarea" lay-verify="required"></textarea>
+				<textarea name="abnormalReason" placeholder="请输入填报信息" class="layui-textarea"></textarea>
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -88,6 +88,7 @@
 			type:"GET",
 			dataType:"json",
 			success:function(result){
+				console.log(result);
 				if (result.code == 0) {
 					initListObj = result.data;
 				} else {
@@ -119,6 +120,8 @@
 
 		// initList();
 
+		console.log(initListObj);
+
 		layui.$.each(initListObj,function (index,value) {
 			var option = '';
 			if(initListObj.length != 0){
@@ -138,7 +141,27 @@
 
 		form.on("submit(add)", function (data) {
 			console.log(data.field);
-			return false;
+			// var signUesrId = data.field.
+
+			// console.log(form.val("form_body"));
+			// console.log(data);
+
+			var task_body = {
+				"signUser" : {
+					"id" : 1
+				},
+				"signInfo" : {
+					"longitude" : 1,
+					"latitude" : 1,
+					"isMalposition" : 1,
+					"abnormalReason" : "",
+					"signPhotoUrl" : "",
+					"position" : "",
+					"isNeedExtra" : 0
+				}
+			};
+
+			// console.log(task_body);
 
 			if (data.field.cpdaily_user_id == -1) {
 				okLayer.redCryMsg("您还没有添加今日校园用户！");
@@ -148,7 +171,7 @@
 			layui.$.ajax({
 				url:"/v1/cpdaily/task/add",
 				type:"POST",
-				data:JSON.stringify(data.field),
+				data:JSON.stringify(task_body),
 				dataType:"json",
 				contentType:"application/json;charset=UTF-8",
 				success:function(result){

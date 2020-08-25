@@ -21,7 +21,7 @@ public class SignInfo {
     private Integer isMalposition = 1;//是否超出范围0.否1.是
     @TableField("abnormal_reason")
     private String abnormalReason;//范围外签到原因（体温等上报信息）
-    @TableField("sign_pohoto_url")
+    @TableField("sign_photo_url")
     private String signPhotoUrl;//签到照片
     @TableField("position")
     private String position;//签到位置

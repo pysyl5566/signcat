@@ -18,4 +18,9 @@ public class CpdailyTaskServiceImpl extends ServiceImpl<CpdailyTaskMapper, SignT
     public List<SignTask> all() {
         return cpdailyTaskMapper.all();
     }
+
+    @Override
+    public boolean insertSignTask(SignTask signTask) {
+        return cpdailyTaskMapper.insertSignInfo(signTask);
+    }
 }
