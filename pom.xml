@@ -87,7 +87,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot.version}</version>
         <configuration>
-            <mainClass>com.alibaba.sca.temp.web.Application</mainClass>
+            <mainClass>top.nextcat.SignCat.SignCatApplication</mainClass>
             <layout>ZIP</layout>
         </configuration>
         <executions>
