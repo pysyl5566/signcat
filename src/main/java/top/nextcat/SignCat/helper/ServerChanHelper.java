@@ -9,7 +9,7 @@ import top.nextcat.SignCat.model.HttpContext;
 import top.nextcat.SignCat.model.result.ResultServerChan;
 
 public class ServerChanHelper {
-    private final static String serverChanKey = "SCU109804Tace5504b45afc9c7dad2daf24672b9c15f3b4907b7ddc";
+    private final static String serverChanKey = "您的Server酱KEY";
 
     public static ResultServerChan sendMessage (String key, String message) {
         String apiUrl = BaseURL.BASE_URL_SERVER_CHAN + ServerChanApi.API_SEND_MESSAGE.replaceFirst("\\{SCKEY\\}",key) + "?text=" + message;
