@@ -1,37 +1,50 @@
-### 3 分钟了解如何进入开发
+### 某签到APP自动签到系统
 
-欢迎使用云效 Codeup，通过阅读以下内容，你可以快速熟悉 Codeup ，并立即开始今天的工作。
+为解决学生忘记签到，开发了此系统。
 
-### 提交**文件**
+注意！！！此系统仅支持签到！
 
-首先，你需要了解在 Codeup 中如何提交代码文件，跟着文档「[__提交第一行代码__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e7546fd9001aee81fd)」一起操作试试看吧。
+### 食用方法
 
-### 开启扫描
+由于时间紧，再加上各种事情，没有写地图选点，地图选点为签到点，右上角有一个坐标，按顺序填写即可。
+http://api.map.baidu.com/lbsapi/getpoint/index.html
 
-开发过程中，为了更好的管理你的代码资产，Codeup 内置了「[__代码规约扫描__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee821c)」和「[__敏感信息检测__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee821b)」服务，你可以在代码库设置-集成与服务中一键开启，开启后提交或合并请求的变更将自动触发扫描，并及时提供结果反馈。
+会员管理里：
+①用户列表→添加用户→使用手机号登录今日校园。
+②签到列表→添加签到→经纬度等信息填写，注意选择自己的(之后会开发有登录系统，只显示自己的)，还有是否在范围内，别忘记上传照片（如果学校不要求，无需上传照片）。
 
-![](https://img.alicdn.com/tfs/TB1nRDatoz1gK0jSZLeXXb9kVXa-1122-380.png "")
+### 注意事项
 
-![](https://img.alicdn.com/tfs/TB1PrPatXY7gK0jSZKzXXaikpXa-1122-709.png "")
+因某些原因，本项目已隐去关键信息，有需要可以加QQ群交流（完全交流，不提供盈利服务）：1042143347。
 
-### 代码评审
+欢迎开发者加入！
 
-功能开发完毕后，通常你需要发起「[__代码合并和评审__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee8216)」，Codeup 支持多人协作的代码评审服务，你可以通过「[__保护分支__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e9546fd9001aee8221)」策略及「[__合并请求设置__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e9546fd9001aee8224)」对合并过程进行流程化管控，同时提供 WebIDE 在线代码评审及冲突解决能力，让你的评审过程更加流畅。
+此外，带附加信息的并没有进行适配，有兴趣开发者可以加群交流。
 
-![](https://img.alicdn.com/tfs/TB1XHrctkP2gK0jSZPxXXacQpXa-1432-887.png "")
+注意！！！本项目仅作为个人学习OKHttp4以及Quartz、Orika等技术所编写的项目！！！纯练手，有很多不足之处。
 
-![](https://img.alicdn.com/tfs/TB1V3fctoY1gK0jSZFMXXaWcVXa-1432-600.png "")
+如果喜欢，请给个Star！！！
 
-### 编写文档
+### 技术选型
 
-项目推进过程中，你的经验和感悟可以直接记录到 Codeup 代码库的「[__文档__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee8213)」内，让智慧可视化。
+【前端】
+OK ADMIN
+LayUI
+jQuery
 
-![](https://img.alicdn.com/tfs/TB1BN2ateT2gK0jSZFvXXXnFXXa-1432-700.png "")
+【后端】
+Spring Boot（后端脚手架）
+Mybatis（数据库持久化）
+Mybatis Plus（数据库持久化助手）
+Orika（深拷贝）
+Quartz（定时任务）
+Fastjson（JSON解析）
+AliyunOSS（OSS）
+OKHttp4（HTTP客户端）
 
-### 成员协作
+【数据库】
+MySQL
 
-是时候邀请成员一起编写卓越的代码工程了，请点击右上角「成员」邀请你的小伙伴开始协作吧！
-
-### 更多
-
-Git 使用教学、高级功能指引等更多说明，参见[__Codeup帮助文档__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e6546fd9001aee81fa)。
+【服务容器】
+阿里云云开发平台产物（基于Serverless的SAE，通过阿里云的云效，进行ROS自动编排，部署到SAE中的Docker中，http://workbench.aliyun.com）
+Tomcat
