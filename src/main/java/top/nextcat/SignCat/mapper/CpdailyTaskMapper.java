@@ -19,12 +19,16 @@ public interface CpdailyTaskMapper extends BaseMapper<SignTask> {
             @Result(column = "task_status_id",property = "taskStatus",javaType = TaskStatus.class,one = @One(select = "top.nextcat.SignCat.mapper.TaskStatusMapper.selectTaskStatusById")),
             @Result(column = "start_date",property = "startDate",javaType = Date.class),
             @Result(column = "pause_date",property = "pauseDate",javaType = Date.class),
-            @Result(column = "end_date",property = "endDate",javaType = Date.class)
+            @Result(column = "end_date",property = "endDate",javaType = Date.class),
+            @Result(column = "cron",property = "cron",javaType = String.class)
     })
     @Select("SELECT * FROM SIGN_TASK")
     List<SignTask> all();
 
-    @Insert("INSERT INTO SIGN_TASK(CPDAILY_USER_ID,SIGN_INFO_ID) VALUES(#{signUser.id},#{signInfo.id})")
+    @Insert("INSERT INTO SIGN_TASK(CPDAILY_USER_ID,SIGN_INFO_ID,CRON) VALUES(#{signUser.id},#{signInfo.id},#{cron})")
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     boolean insertSignInfo (SignTask signTask);
+
+    @Insert("UPDATE SIGN_TASK SET START_DATE=#{startDate} WHERE ID=#{id}")
+    boolean updateStartDateById (SignTask signTask);
 }

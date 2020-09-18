@@ -38,24 +38,24 @@ public class ResultSubmitSign {
     }
 }
 
-    private Integer code;
+    private Long code;
     private String message;
     private Data datas;
 
     public ResultSubmitSign() {
     }
 
-    public ResultSubmitSign(Integer code, String message, Data datas) {
+    public ResultSubmitSign(Long code, String message, Data datas) {
         this.code = code;
         this.message = message;
         this.datas = datas;
     }
 
-    public Integer getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 

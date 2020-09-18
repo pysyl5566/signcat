@@ -5,15 +5,28 @@ import okhttp3.Headers;
 import top.nextcat.SignCat.aliyun.OSSConfig;
 import top.nextcat.SignCat.aliyun.OSSHelper;
 import top.nextcat.SignCat.api.AliyunOSSApi;
+import top.nextcat.SignCat.api.AuthApi;
 import top.nextcat.SignCat.api.BaseURL;
+import top.nextcat.SignCat.api.SignApi;
+import top.nextcat.SignCat.model.CpdailyUser;
 import top.nextcat.SignCat.model.HttpContext;
 import top.nextcat.SignCat.model.UploadFile;
 import top.nextcat.SignCat.model.result.ResultAliyunOSSInfo;
+import top.nextcat.SignCat.model.result.ResultAuthSchoolInfo;
 
 public class AliyunOSSHelper {
-    public static ResultAliyunOSSInfo getAliyunOSSInfo (String schoolCode, String modAuthCas) {
+    public static ResultAliyunOSSInfo getAliyunOSSInfo (CpdailyUser cpdailyUser, String modAuthCas) {
+        ResultAuthSchoolInfo resultAuthSchoolInfo = AuthHelper.getSchoolAuthInfo(cpdailyUser);
+        if (resultAuthSchoolInfo == null) {
+            return null;
+        }
+
+        String protocol = StringHelper.getSubString(resultAuthSchoolInfo.getData().get(0).getAmpUrl(),"","://");
+        String schoolUrl = StringHelper.getSubString(resultAuthSchoolInfo.getData().get(0).getAmpUrl(),"://","/");
+        String apiUrl = protocol + "://" + schoolUrl + AliyunOSSApi.API_GET_ALIYUN_OSS;
+
         HttpContext httpContext = new HttpContext();
-        httpContext.setUrl(BaseURL.BASE_URL_SCHOOL_CAMPUSHOY.replaceFirst("\\{schoolCode\\}",schoolCode) + AliyunOSSApi.API_GET_ALIYUN_OSS);
+        httpContext.setUrl(apiUrl);
         Headers.Builder headersBuilder = new Headers.Builder();
         headersBuilder.add("Cookie","MOD_AUTH_CAS=" + modAuthCas + ";");
         httpContext.setHeaders(headersBuilder.build());

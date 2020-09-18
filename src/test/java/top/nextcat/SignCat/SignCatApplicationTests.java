@@ -8,6 +8,7 @@ class SignCatApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

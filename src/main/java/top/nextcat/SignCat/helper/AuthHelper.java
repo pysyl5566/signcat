@@ -9,14 +9,22 @@ import top.nextcat.SignCat.api.BaseURL;
 import top.nextcat.SignCat.model.CpdailyUser;
 import top.nextcat.SignCat.model.HttpContext;
 import top.nextcat.SignCat.model.POSTBody;
+import top.nextcat.SignCat.model.result.ResultAuthSchoolInfo;
 import top.nextcat.SignCat.model.result.ResultLoginInfo;
 import top.nextcat.SignCat.utils.EncryptHelper;
 
 import java.util.Map;
 
 public class AuthHelper {
-    public static String getModeAuthCas (CpdailyUser cpdailyUser) {
-        String apiUrl = BaseURL.BASE_URL_SCHOOL_CAMPUSHOY.replaceFirst("\\{schoolCode\\}",cpdailyUser.getSchoolCode()) + AuthApi.API_GET_MOD_AUTH_CAS;
+    public static String getModAuthCas (CpdailyUser cpdailyUser) {
+//        String apiUrl = BaseURL.BASE_URL_SCHOOL_CAMPUSHOY.replaceFirst("\\{schoolCode\\}",cpdailyUser.getSchoolCode()) + AuthApi.API_GET_MOD_AUTH_CAS;
+        ResultAuthSchoolInfo resultAuthSchoolInfo = AuthHelper.getSchoolAuthInfo(cpdailyUser);
+        if (resultAuthSchoolInfo == null) {
+            return "";
+        }
+
+        String apiUrl = resultAuthSchoolInfo.getData().get(0).getAmpUrl() + AuthApi.API_GET_MOD_AUTH_CAS;
+
         HttpContext httpContext = new HttpContext();
         httpContext.setUrl(apiUrl);
         httpContext.setCookie("CASTGC=" + cpdailyUser.getTgc() + ";");
@@ -50,5 +58,27 @@ public class AuthHelper {
         }
 
         return JSONObject.parseObject(responseHttpContext.getBody(), ResultLoginInfo.class);
+    }
+
+    public static ResultAuthSchoolInfo getSchoolAuthInfo (CpdailyUser cpdailyUser) {
+        String apiUrl = BaseURL.BASE_URL_MOBILE_CAMPUSHOY + AuthApi.API_GET_SCHOOL_AUTH_INFO + "?ids=" + cpdailyUser.getSchoolCode();
+        HttpContext httpContext = new HttpContext();
+        httpContext.setUrl(apiUrl);
+//        httpContext.setCookie("CASTGC=" + cpdailyUser.getTgc() + ";");
+        HttpContext responseHttpContext = OkHttpHelper.get(httpContext);
+
+        if (!OkHttpHelper.HttpMediaType.JSON.equals(responseHttpContext.getBodyMediaType())) {
+            return null;
+        }
+
+//        if (responseHttpContext.getCookieMap().get(HttpUrl.parse(apiUrl).host()) != null) {
+//            for (Map.Entry<String, Cookie> cookie: responseHttpContext.getCookieMap().get(HttpUrl.parse(apiUrl).host()).entrySet()) {
+//                if ("MOD_AUTH_CAS".equals(cookie.getKey())) {
+//                    return cookie.getValue().value();
+////                    cpdailyUser.setModAuthCas(cookie.getValue().value());
+//                }
+//            }
+//        }
+        return JSONObject.parseObject(responseHttpContext.getBody(), ResultAuthSchoolInfo.class);
     }
 }

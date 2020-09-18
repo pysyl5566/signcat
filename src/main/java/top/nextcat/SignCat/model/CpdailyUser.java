@@ -6,16 +6,23 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
+
 @TableName("cpdaily_user")
-public class CpdailyUser {
+public class CpdailyUser implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
     @TableField("mobile")
     private String mobile;
     @TableField("name")
     private String name;
+    @JsonIgnore
     @TableField("school_code")
     private String schoolCode;
+    @TableField("school_name")
+    private String schoolName;
     @TableField("student_id")
     private String studentId;
     @JsonIgnore
@@ -28,11 +35,12 @@ public class CpdailyUser {
     public CpdailyUser() {
     }
 
-    public CpdailyUser(Integer id, String mobile, String name, String schoolCode, String studentId, String tgc, String sessionToken) {
+    public CpdailyUser(Integer id, String mobile, String name, String schoolCode, String schoolName, String studentId, String tgc, String sessionToken) {
         this.id = id;
         this.mobile = mobile;
         this.name = name;
         this.schoolCode = schoolCode;
+        this.schoolName = schoolName;
         this.studentId = studentId;
         this.tgc = tgc;
         this.sessionToken = sessionToken;
@@ -68,6 +76,14 @@ public class CpdailyUser {
 
     public void setSchoolCode(String schoolCode) {
         this.schoolCode = schoolCode;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public String getStudentId() {

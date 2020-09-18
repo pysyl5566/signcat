@@ -23,4 +23,9 @@ public class CpdailyTaskServiceImpl extends ServiceImpl<CpdailyTaskMapper, SignT
     public boolean insertSignTask(SignTask signTask) {
         return cpdailyTaskMapper.insertSignInfo(signTask);
     }
+
+    @Override
+    public boolean updateStartDateById(SignTask signTask) {
+        return cpdailyTaskMapper.updateStartDateById(signTask);
+    }
 }

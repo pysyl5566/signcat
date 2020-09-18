@@ -60,7 +60,8 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">照片预览</label>
 			<div class="layui-input-inline">
-				<img src="/images/avatar.png" width="40%" height="40%">
+				<input type="hidden" id="signImageUrl">
+				<img id="signImage" src="/images/avatar.png" width="40%" height="40%">
 			</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
@@ -80,24 +81,11 @@
 <!--js逻辑-->
 <script src="../../lib/layui/layui.js"></script>
 <script>
-	var initListObj;
-
-	function initList () {
-		layui.$.ajax({
-			url:"/v1/cpdaily/user/list",
-			type:"GET",
-			dataType:"json",
-			success:function(result){
-				console.log(result);
-				if (result.code == 0) {
-					initListObj = result.data;
-				} else {
-					okLayer.redCryMsg(result.msg, function () {
-						// parent.layer.close(parent.layer.getFrameIndex(window.name));
-					});
-				}
-			}});
-	}
+	// var initListObj;
+	//
+	// function initList () {
+	//
+	// }
 
 	layui.use(["element", "form", "laydate", "okLayer", "okUtils", "upload"], function () {
 		let element = layui.element;
@@ -109,73 +97,145 @@
 
 		var signPhotoUpload = upload.render({
 			elem: '#signPhoto' //绑定元素
-			,url: '/v1/cpdaily/sign/upload' //上传接口
+			,url: '/v1/cpdaily/sign/uploadImage' //上传接口
 			,done: function(res){
+				if (res.errCode != 0) {
+					okLayer.redCryMsg(res.errMsg, function () {
+
+					});
+				} else {
+					layui.$("#signImageUrl").val(res.data.imagePath);
+					layui.$('#signImage').attr('src', "/images/sign/" + res.data.imagePath);
+					okLayer.greenTickMsg("上传签到照片成功！", function () {
+						// parent.layer.close(parent.layer.getFrameIndex(window.name));
+					});
+				}
 				//上传完毕回调
 			}
 			,error: function(){
-				//请求异常回调
+				okLayer.redCryMsg("上传签到照片失败！请联系开发者！", function () {
+
+				});
 			}
 		});
 
 		// initList();
 
-		console.log(initListObj);
+		// console.log(initListObj);
 
-		layui.$.each(initListObj,function (index,value) {
-			var option = '';
-			if(initListObj.length != 0){
-				var option = '';
-				layui.$.each(initListObj,function (index,value) {
-					option +="<option value='" + value.id + "'>" + value.schoolCode + "：" + value.studentId + "：" + value.name + "</option>";
-				});
-			} else {
-				var option = '<option value="-1">请选择！！！</option>';  //默认值
-			}
-			layui.$("#cpdaily_users").html("");
-			layui.$("#cpdaily_users").append(option);
-			form.render('select');
-		});
+		layui.$.ajax({
+			url:"/v1/cpdaily/user/list",
+			type:"GET",
+			dataType:"json",
+			success:function(result){
+				console.log(result);
+				if (result.code === 0) {
+					var initListObj = result.data;
+					layui.$.each(initListObj,function (index,value) {
+						var option = '';
+						if(initListObj.length != 0){
+							var option = '';
+							layui.$.each(initListObj,function (index,value) {
+								option +="<option value='" + value.id + "'>" + "【" + value.schoolName + "】" + value.studentId + "：" + value.name + "</option>";
+							});
+						} else {
+							var option = '<option value="-1">请选择！！！</option>';  //默认值
+						}
+						layui.$("#cpdaily_users").html("");
+						layui.$("#cpdaily_users").append(option);
+						form.render('select');
+					});
+				} else {
+					okLayer.redCryMsg(result.msg, function () {
+						// parent.layer.close(parent.layer.getFrameIndex(window.name));
+					});
+				}
+			}});
 
 		okLoading.close();
 
 		form.on("submit(add)", function (data) {
+			// var isMalposition = undefined;
 			console.log(data.field);
 			// var signUesrId = data.field.
 
 			// console.log(form.val("form_body"));
+			// console.log(data.field.isMalposition);
+			// return false;
 			// console.log(data);
 
-			var task_body = {
+			// var cpdaily_user_id = data.cpdaily_user_id;
+			// var longitude = data.longitude;
+			// var latitude = data.latitude;
+
+			var isMalposition;
+			if (data.field.isMalposition === "1") {
+				isMalposition = 1;
+			} else {
+				isMalposition = 0;
+			}
+
+			if (data.field.cpdaily_user_id == "") {
+				okLayer.redCryMsg("请添加今日校园用户之后再进行添加签到！", function () {
+					// parent.layer.close(parent.layer.getFrameIndex(window.name));
+				});
+				return false;
+			}
+
+			if (data.field.latitude == "") {
+				okLayer.redCryMsg("请输入纬度！", function () {
+					// parent.layer.close(parent.layer.getFrameIndex(window.name));
+				});
+				return false;
+			}
+
+			if (data.field.longitude == "") {
+				okLayer.redCryMsg("请输入经度！", function () {
+					// parent.layer.close(parent.layer.getFrameIndex(window.name));
+				});
+				return false;
+			}
+
+			if (data.field.position == "") {
+				okLayer.redCryMsg("请输入签到位置！", function () {
+					// parent.layer.close(parent.layer.getFrameIndex(window.name));
+				});
+				return false;
+			}
+
+			// var abnormalReason = data.abnormalReason;
+			// var position = data.position;
+
+			var sign_body = {
 				"signUser" : {
-					"id" : 1
+					"id" : data.field.cpdaily_user_id
 				},
 				"signInfo" : {
-					"longitude" : 1,
-					"latitude" : 1,
-					"isMalposition" : 1,
-					"abnormalReason" : "",
-					"signPhotoUrl" : "",
-					"position" : "",
+					"longitude" : data.field.longitude,
+					"latitude" : data.field.latitude,
+					"isMalposition" : isMalposition,
+					"abnormalReason" : data.field.abnormalReason,
+					"signPhotoUrl" : layui.$("#signImageUrl").val(),
+					"position" : data.field.position,
 					"isNeedExtra" : 0
 				}
 			};
 
-			// console.log(task_body);
+			// console.log(sign_body);
 
-			if (data.field.cpdaily_user_id == -1) {
+			if (data.field.cpdaily_user_id === -1) {
 				okLayer.redCryMsg("您还没有添加今日校园用户！");
 				return false;
 			}
 
 			layui.$.ajax({
-				url:"/v1/cpdaily/task/add",
+				url:"/v1/cpdaily/sign/add",
 				type:"POST",
-				data:JSON.stringify(task_body),
+				data:JSON.stringify(sign_body),
 				dataType:"json",
 				contentType:"application/json;charset=UTF-8",
 				success:function(result){
-					if (result.errCode == 0) {
+					if (result.errCode === 0) {
 						okLayer.greenTickMsg("添加成功！", function () {
 							parent.layer.close(parent.layer.getFrameIndex(window.name));
 						});

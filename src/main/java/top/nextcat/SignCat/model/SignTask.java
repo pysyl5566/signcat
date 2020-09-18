@@ -4,12 +4,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import top.nextcat.SignCat.model.result.TaskStatus;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TableName("sign_task")
-public class SignTask {
+public class SignTask implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 //    @TableField("cpdaily_user_id")
@@ -28,11 +32,14 @@ public class SignTask {
     private Date pauseDate;
     @TableField("end_date")
     private Date endDate;
+    @JsonIgnore
+    @TableField("cron")
+    private String cron;
 
     public SignTask() {
     }
 
-    public SignTask(Integer id, CpdailyUser signUser, SignInfo signInfo, TaskStatus taskStatus, Date startDate, Date pauseDate, Date endDate) {
+    public SignTask(Integer id, CpdailyUser signUser, SignInfo signInfo, TaskStatus taskStatus, Date startDate, Date pauseDate, Date endDate, String cron) {
         this.id = id;
         this.signUser = signUser;
         this.signInfo = signInfo;
@@ -40,6 +47,7 @@ public class SignTask {
         this.startDate = startDate;
         this.pauseDate = pauseDate;
         this.endDate = endDate;
+        this.cron = cron;
     }
 
     public Integer getId() {
@@ -96,5 +104,13 @@ public class SignTask {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getCron() {
+        return cron;
+    }
+
+    public void setCron(String cron) {
+        this.cron = cron;
     }
 }

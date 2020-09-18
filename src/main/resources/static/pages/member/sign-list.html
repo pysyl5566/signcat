@@ -37,7 +37,7 @@
 
 		let userTable = table.render({
 			elem: '#tableId',
-			url: '/v1/cpdaily/task/list',
+			url: '/v1/cpdaily/sign/list',
 			limit: 20,
 			page: true,
 			toolbar: true,
@@ -48,7 +48,7 @@
 				{field: "id", title: "ID", width: 60, sort: true},
 				{field: "mobile", title: "手机号",templet: "<div>{{d.signUser.mobile}}</div>", width: 100},
 				{field: "name", title: "姓名",templet: "<div>{{d.signUser.name}}</div>", width: 100},
-				{field: "schoolCode", title: "学校名称",templet: "<div>{{d.signUser.schoolCode}}</div>", width: 100},
+				{field: "schoolCode", title: "学校名称",templet: "<div>{{d.signUser.schoolName}}</div>", width: 100},
 				{field: "studentId", title: "学号",templet: "<div>{{d.signUser.studentId}}</div>", width: 100},
 				{field: "longitude", title: "经度",templet: "<div>{{d.signInfo.longitude}}</div>", width: 100},
 				{field: "latitude", title: "纬度",templet: "<div>{{d.signInfo.latitude}}</div>", width: 100},
@@ -152,16 +152,16 @@
 		}
 
 		function add() {
-			okLayer.open("添加用户", "task-insert.html", "90%", "90%", function (layero) {
-				let iframeWin = window[layero.find("iframe")[0]["name"]];
-				iframeWin.initList();
+			okLayer.open("添加签到", "sign-insert.html", "90%", "90%", function (layero) {
+				// let iframeWin = window[layero.find("iframe")[0]["name"]];
+				// iframeWin.initList();
 			}, function () {
 				userTable.reload();
 			})
 		}
 
 		function edit(data) {
-			okLayer.open("更新用户", "user-update.html", "90%", "90%", function (layero) {
+			okLayer.open("更新用户", "sign-update.html", "90%", "90%", function (layero) {
 				let iframeWin = window[layero.find("iframe")[0]["name"]];
 				iframeWin.initForm(data);
 			}, function () {
@@ -187,11 +187,12 @@
 		<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="batchEnabled">批量启用</button>
 		<button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="batchDisabled">批量停用</button>
 		<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDel">批量删除</button>
-		<button class="layui-btn layui-btn-sm" lay-event="add">添加任务</button>
+		<button class="layui-btn layui-btn-sm" lay-event="add">添加签到</button>
 	</div>
 </script>
 <!-- 行工具栏模板 -->
 <script type="text/html" id="operationTpl">
+	<a href="javascript:" title="手动签到" lay-event="sign"><i class="layui-icon">&#xe609;</i></a>
 	<a href="javascript:" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
 	<a href="javascript:" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
 </script>

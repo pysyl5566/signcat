@@ -27,8 +27,8 @@
                 "spread": false
             },
             {
-                "title": "任务列表",
-                "href": "pages/member/task-list.html",
+                "title": "签到列表",
+                "href": "pages/member/sign-list.html",
                 "fontFamily": "layui-icon",
                 "icon": "&#xe62e;",
                 "spread": false

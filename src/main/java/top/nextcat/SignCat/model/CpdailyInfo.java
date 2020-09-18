@@ -9,7 +9,7 @@ public class CpdailyInfo {
     private String systemVersion = "10.1.1";//系统版本，如：10.1.1
     private String model = "K20 Pro";//设备版本，如：MuMu、K20 Pro
     private String deviceId = new RandomGUIDUtils().toString();//设备ID，可以随机生成
-    private String appVersion = "8.1.19";//APP版本，如：8.1.19
+    private String appVersion = "8.2.4";//APP版本，如：8.1.19
     //注意：登录的时候，经纬度均为0，且用户ID为空
     private double lon = 0.0;//经度
     private double lat = 0.0;//纬度

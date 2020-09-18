@@ -11,14 +11,14 @@
 	<groupId>top.nextcat</groupId>
 	<artifactId>SignCat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>SignCat</name>
 	<description>I'm a kitten!</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-    <applicationName>${project.artifactId}</applicationName>
-    <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
+		<applicationName>${project.artifactId}</applicationName>
+		<spring-boot.version>2.3.3.RELEASE</spring-boot.version>
 	</properties>
 
 	<dependencies>
@@ -61,10 +61,29 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>com.diboot</groupId>
 			<artifactId>diboot-core-spring-boot-starter</artifactId>
 			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<!--<dependency>
+			<groupId>com.cronutils</groupId>
+			<artifactId>cron-utils</artifactId>
+			<version>9.1.1</version>
 		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -80,24 +99,41 @@
 	</dependencies>
 
 	<build>
-    <finalName>${applicationName}</finalName>
+    	<finalName>${applicationName}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
-        <configuration>
-            <mainClass>top.nextcat.SignCat.SignCatApplication</mainClass>
-            <layout>ZIP</layout>
-        </configuration>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>repackage</goal>
-                </goals>
-            </execution>
-        </executions>
+				<configuration>
+					<mainClass>top.nextcat.SignCat.SignCatApplication</mainClass>
+					<layout>ZIP</layout>
+					<!--<executable>true</executable>-->
+					<!--<fork>true</fork>-->
+					<!--增加jvm参数-->
+					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+				</configuration>
+				<version>${spring-boot.version}</version>
+				<!--<configuration>
+					<mainClass>top.nextcat.SignCat.SignCatApplication</mainClass>
+					<layout>ZIP</layout>
+				</configuration>-->
+				<!--<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>-->
 			</plugin>
+			<!--<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration> &lt;!&ndash; Exclude JCL and LOG4J since all logging should go through SLF4J. Note that we're excluding log4j-<version>.jar but keeping log4j-over-slf4j-<version>.jar &ndash;&gt;
+					<packagingExcludes>
+						WEB-INF/lib/tomcat-embed-*.jar,
+						WEB-INF/lib/spring-boot-starter-tomcat-*.jar
+					</packagingExcludes>
+				</configuration>
+			</plugin>-->
 		</plugins>
 	</build>
 
